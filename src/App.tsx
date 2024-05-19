@@ -17,14 +17,19 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
+const AnimationVars = {
+  start: { scale: 0 },
+  end: {
+    scale: 1,
+    rotateZ: 90,
+    transition: { type: "spring", bounce: 0.4, delay: 0.3 },
+  },
+};
+
 function App() {
   return (
     <Wrapper>
-      <Box
-        transition={{ type: "spring", bounce: 0.4, delay: 0.3 }}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1, rotateZ: 90 }}
-      />
+      <Box variants={AnimationVars} initial="start" animate="end" />
       <span>.</span>
     </Wrapper>
   );
