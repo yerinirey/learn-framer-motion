@@ -1,9 +1,16 @@
 import styled from "styled-components";
-import { motion, spring } from "framer-motion";
-import { useRef } from "react";
+import {
+  motion,
+  spring,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const Wrapper = styled.div`
-  height: 100vh;
+const Wrapper = styled(motion.div)`
+  height: 200vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -93,10 +100,24 @@ const dragVars = {
   drag: {},
 };
 function App() {
-  const dragBoxRef = useRef<HTMLDivElement>(null);
-  console.log(dragBoxRef);
+  // const dragBoxRef = useRef<HTMLDivElement>(null);
+  // console.log(dragBoxRef);
+  const x = useMotionValue(0);
+  const rotateZ = useTransform(x, [-400, 400], [-360, 360]);
+  const gradient = useTransform(
+    x,
+    [-400, 0, 400],
+    [
+      "linear-gradient(135deg, rgb(0,210,238), rgb(0,83,238))",
+      "linear-gradient(135deg, rgb(238,0,153), rgb(221,0,238)",
+      "linear-gradient(135deg, rgb(0,238,155), rgb(238,178,0)",
+    ]
+  );
+
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5]);
   return (
-    <Wrapper>
+    <Wrapper style={{ background: gradient }}>
       {/* <Box variants={AnimationVars} initial="start" animate="end" /> */}
       {/* <VariantsBox variants={VariantsboxVars} initial="start" animate="end">
         <Circle variants={circleVars} />
@@ -105,7 +126,7 @@ function App() {
         <Circle variants={circleVars} />
       </VariantsBox> */}
       {/* <Box variants={gestureVars} whileHover="hover" whileTap="click" /> */}
-      <DragBox ref={dragBoxRef}>
+      {/* <DragBox ref={dragBoxRef}>
         <Box
           drag
           // dragSnapToOrigin
@@ -114,7 +135,15 @@ function App() {
           variants={dragVars}
           whileTap="click"
         />
-      </DragBox>
+      </DragBox> */}
+      <button
+        onClick={() => {
+          x.set(200);
+        }}
+      >
+        Click ME
+      </button>
+      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
       <span>.</span>
     </Wrapper>
   );
