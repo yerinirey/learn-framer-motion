@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import { Box } from "../routes/home";
 import { motion, useTransform } from "framer-motion";
 
 const Scroll = styled.div`
@@ -8,10 +7,10 @@ const Scroll = styled.div`
   justify-content: center;
   align-items: center;
   padding-left: 16px;
+  background-color: transparent;
 `;
 const ScrollBox = styled(motion.div)`
   position: fixed;
-
   width: 160px;
   height: 160px;
   background-color: white;

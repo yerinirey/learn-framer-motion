@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import AnimationEx from "../components/animation.ex";
 import VariantsEx from "../components/variants.ex";
 import GesturesEx from "../components/gestures.ex";
 import DragEx from "../components/drag.ex";
 import ScrollEx from "../components/scroll.ex";
 import PathEx from "../components/path.ex";
-import React from "react";
+import React, { useState } from "react";
+import { Refresh } from "../components/refresh";
 
 const Wrapper = styled(motion.div)`
   height: calc(100vh - 80px - 32px);
@@ -14,8 +15,9 @@ const Wrapper = styled(motion.div)`
   grid-template-columns: repeat(3, minmax(0, 340px));
   justify-content: center;
   align-content: center;
-  gap: 40px;
+  gap: 100px;
 `;
+
 const Container = styled(motion.div)`
   display: flex;
   align-items: center;
@@ -23,6 +25,7 @@ const Container = styled(motion.div)`
   border-radius: 20px;
   width: 300px;
   height: 300px;
+  position: relative;
   &:nth-child(1) {
     background: linear-gradient(135deg, #fd0b8c, #df00e7);
   }
@@ -50,6 +53,7 @@ const Container = styled(motion.div)`
     background: linear-gradient(135deg, #00a79e, #009b2e);
   }
 `;
+
 export const Box = styled(motion.div)`
   width: 160px;
   height: 160px;
@@ -94,18 +98,39 @@ export default function Home() {
     const y = (scrollTop / (scrollHeight - clientHeight)) * 100;
     scrollY.set(y);
   };
+  const tmp = Array.from(
+    { length: componentsArray.length },
+    (_, idx) => idx + 1
+  );
+
+  const [refresh, setRefresh] = useState(tmp);
+  const onClick = (index: number) => {
+    const copy = [...refresh];
+    console.log(copy);
+    copy[index] *= 1.1;
+    setRefresh(copy);
+  };
   return (
     <Wrapper>
       {componentsArray.map((component, index) =>
         index !== 4 ? (
-          <Container key={index}>{component}</Container>
+          <Container key={refresh[index]}>
+            {component}
+            {index === 0 || index === 1 || index === 5 ? (
+              <Refresh onClick={() => onClick(index)} />
+            ) : (
+              ""
+            )}
+          </Container>
         ) : (
           <Container
-            key={index}
+            key={refresh[index]}
             onScroll={onScroll}
             style={{ background: scrollBg }}
           >
-            {React.cloneElement(component, { scrollY })}
+            {React.cloneElement(component, {
+              scrollY,
+            })}
           </Container>
         )
       )}
