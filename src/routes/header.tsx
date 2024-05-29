@@ -4,11 +4,15 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  width: 100vw;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
   padding: 20px 100px;
+  position: fixed;
+  z-index: 99;
+  background-color: black;
 `;
 const Button = styled(Link)`
   font-size: 26px;

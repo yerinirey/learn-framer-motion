@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { Refresh } from "../components/refresh";
 
 const Wrapper = styled(motion.div)`
-  height: calc(100vh - 80px - 32px);
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 340px));
   justify-content: center;
@@ -102,7 +102,6 @@ export default function Home() {
     { length: componentsArray.length },
     (_, idx) => idx + 1
   );
-
   const [refresh, setRefresh] = useState(tmp);
   const onClick = (index: number) => {
     const copy = [...refresh];
