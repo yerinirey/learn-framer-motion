@@ -11,8 +11,8 @@ const Container = styled.div`
   gap: 10px;
   padding: 20px 100px;
   position: fixed;
-  z-index: 99;
-  background-color: black;
+  z-index: 98;
+  background-color: #111111;
 `;
 const Button = styled(Link)`
   font-size: 26px;
